@@ -70,6 +70,7 @@ export default function GameRunner() {
 
         .callList {
           width: 600px;
+          max-width: 100%;
           margin: auto;
         }
 
@@ -91,9 +92,7 @@ export default function GameRunner() {
           }}
           value={text}
         />
-        <button
-          onClick={e => updateGameState(checkWinner(gameState, e.target.value))}
-        >
+        <button onClick={e => updateGameState(checkWinner(gameState, text))}>
           Check Winner
         </button>
       </div>
