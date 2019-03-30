@@ -112,7 +112,7 @@ export default function Board() {
           }}
           value={username}
         />
-        <button onClick={() => updateBoard(createBoard(seed, username))}>
+        <button onClick={() => updateBoard(createBoard(username, seed))}>
           Start Game
         </button>
       </div>
