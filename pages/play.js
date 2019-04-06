@@ -58,11 +58,6 @@ export default function Board() {
           border-radius: 6px;
         }
 
-        td:first-child {
-          background-color: #372;
-          color: white;
-        }
-
         tr:first-child {
           background-color: #372;
           color: white;
@@ -74,23 +69,19 @@ export default function Board() {
           cursor: default;
         }
 
-        td:first-child:hover {
-          cursor: default;
-        }
-
-        td:not(:first-child):hover {
+        td:hover {
           background-color: #327;
           color: white;
           cursor: pointer;
         }
 
-        td.clicked:not(:first-child) {
+        td.clicked {
           background-color: #903035;
           color: white;
           cursor: pointer;
         }
 
-        td.clicked:not(:first-child):hover {
+        td.clicked:hover {
           background-color: #723;
           color: white;
           cursor: pointer;
@@ -139,23 +130,19 @@ export default function Board() {
               </td>
             );
           };
-          const draw = letter => _.range(0, 5).map(i => data(letter, i));
+          const draw = i => letters.map(letter => data(letter, i));
           return (
             <table>
               <tbody>
                 <tr>
-                  <td />
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                  <td>5</td>
+                  <td>B</td>
+                  <td>I</td>
+                  <td>N</td>
+                  <td>G</td>
+                  <td>O</td>
                 </tr>
-                {letters.map(letter => (
-                  <tr key={letter}>
-                    <td>{letter}</td>
-                    {draw(letter)}
-                  </tr>
+                {_.range(0, 5).map(n => (
+                  <tr key={n}>{draw(n)}</tr>
                 ))}
               </tbody>
             </table>

@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 import _ from "lodash";
 
-import { createInitialGameState, pull, checkWinner } from "../lib/bingo";
+import {
+  createInitialGameState,
+  pull,
+  checkWinner,
+  unrandAllValues,
+  letters
+} from "../lib/bingo";
 
 export default function GameRunner() {
   const [gameState, updateGameState] = useState(createInitialGameState());
   const [text, updateText] = useState("");
+  const [popped, updatePopped] = useState(false);
   const lastCalled = _.last(gameState.used);
   const lastCalledText = lastCalled ? lastCalled.value : "None";
+  const lastThree = _.takeRight(gameState.used, 3).map(i => i.value);
+  console.log(lastThree);
   const valuesLeft = gameState.left.length;
   const winner = gameState.winner;
 
@@ -21,6 +30,23 @@ export default function GameRunner() {
         Restart
       </button>
     );
+
+  const renderCall = letter => {
+    return (
+      <tr>
+        <td className="letter">{letter}</td>
+        {unrandAllValues[letter].map(o => (
+          <td
+            className={
+              _.find(gameState.used, used => used.value === o.value) && "called"
+            }
+          >
+            {o.num}
+          </td>
+        ))}
+      </tr>
+    );
+  };
   return (
     <div className="mainContainer">
       <head>
@@ -67,16 +93,61 @@ export default function GameRunner() {
           padding: 6px;
           border-radius: 6px;
         }
-
-        .callList {
+        table {
           width: 600px;
-          max-width: 100%;
           margin: auto;
         }
+        td {
+          width: 50px;
+          height: 30px;
+          border: solid;
+          border-width: 1px;
+          border-color: black;
+          border-radius: 6px;
+        }
+        td.called {
+          background-color: #903035;
+          color: white;
+        }
 
-        .callList > span {
-          padding: 10px;
-          font-size: 1.25em;
+        td.letter {
+          background-color: #372;
+          color: white;
+        }
+        .popup {
+          padding-top: 20px;
+        }
+
+        .popup > div:first-child {
+          padding-bottom: 20px;
+        }
+
+        .lastCalledBody {
+          background-color: white;
+          padding: 8px;
+          text-align: center;
+          display: flex;
+        }
+
+        .lastCalledBody > span {
+          padding: 8px;
+        }
+
+        .lastCalledBody > span:not(:last-child) {
+          border: 0;
+          border-right: 1px;
+          border-style: solid;
+        }
+
+        .lastCalledWindow {
+          padding: 5px;
+        }
+
+        .lastCalledWindowHeader {
+          padding: 10px 0;
+          font-size: 1.2em;
+          color: white;
+          font-weight: 600;
         }
       `}</style>
       <h1>BINGO</h1>
@@ -109,11 +180,44 @@ export default function GameRunner() {
           {button()}
         </div>
       )}
-      <div className="callList">
-        {gameState.used.map(i => (
-          <span key={i.value}>{i.value} </span>
-        ))}
-      </div>
+      <table>
+        <tbody>{letters.map(letter => renderCall(letter))}</tbody>
+      </table>
+      {popped ? (
+        (() => {
+          const NewWindow = require("react-new-window");
+
+          return (
+            <NewWindow
+              title="BINGO"
+              features={{ height: "140px", width: "200px" }}
+            >
+              <div className="lastCalledWindow">
+                <div className="lastCalledWindowHeader">Last Called</div>
+                <div className="lastCalledBody">
+                  {lastThree.length === 0 ? (
+                    <div> </div>
+                  ) : (
+                    _.reverse(
+                      lastThree.map(i => (
+                        <span className="lastCalledSpan"> {i} </span>
+                      ))
+                    )
+                  )}
+                </div>
+              </div>
+            </NewWindow>
+          );
+        })()
+      ) : (
+        <div className="popup">
+          <div>
+            Click here to open the game's pop-up window. You will probably need
+            to disable any pop up blockers
+          </div>
+          <button onClick={() => updatePopped(true)}>Open Popup</button>
+        </div>
+      )}
     </div>
   );
 }
