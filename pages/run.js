@@ -167,7 +167,6 @@ export default function GameRunner() {
           Check Winner
         </button>
       </div>
-
       {winner ? (
         <div className="ui">
           <h2> BINGO! {text} wins! </h2>
@@ -183,6 +182,7 @@ export default function GameRunner() {
       <table>
         <tbody>{letters.map(letter => renderCall(letter))}</tbody>
       </table>
+      /*
       {popped ? (
         (() => {
           const NewWindow = require("react-new-window");
@@ -218,6 +218,7 @@ export default function GameRunner() {
           <button onClick={() => updatePopped(true)}>Open Popup</button>
         </div>
       )}
+      */
     </div>
   );
 }
