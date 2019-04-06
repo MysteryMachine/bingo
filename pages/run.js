@@ -182,43 +182,6 @@ export default function GameRunner() {
       <table>
         <tbody>{letters.map(letter => renderCall(letter))}</tbody>
       </table>
-      /*
-      {popped ? (
-        (() => {
-          const NewWindow = require("react-new-window");
-
-          return (
-            <NewWindow
-              title="BINGO"
-              features={{ height: "140px", width: "200px" }}
-            >
-              <div className="lastCalledWindow">
-                <div className="lastCalledWindowHeader">Last Called</div>
-                <div className="lastCalledBody">
-                  {lastThree.length === 0 ? (
-                    <div> </div>
-                  ) : (
-                    _.reverse(
-                      lastThree.map(i => (
-                        <span className="lastCalledSpan"> {i} </span>
-                      ))
-                    )
-                  )}
-                </div>
-              </div>
-            </NewWindow>
-          );
-        })()
-      ) : (
-        <div className="popup">
-          <div>
-            Click here to open the game's pop-up window. You will probably need
-            to disable any pop up blockers
-          </div>
-          <button onClick={() => updatePopped(true)}>Open Popup</button>
-        </div>
-      )}
-      */
     </div>
   );
 }
