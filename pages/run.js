@@ -13,8 +13,12 @@ export default function GameRunner() {
   const [gameState, updateGameState] = useState(createInitialGameState());
   const [text, updateText] = useState("");
   const [popped, updatePopped] = useState(false);
-  const lastCalled = _.last(gameState.used);
-  const lastCalledText = lastCalled ? lastCalled.value : "None";
+  const lastCalled1 = _.last(gameState.used);
+  const lastCalledText1 = lastCalled1 ? lastCalled1.value : "None";
+  const lastCalled2 = _.nth(gameState.used, -2);
+  const lastCalledText2 = lastCalled2 ? lastCalled2.value : "";
+  const lastCalled3 = _.nth(gameState.used, -3);
+  const lastCalledText3 = lastCalled3 ? lastCalled3.value : "";
   const lastThree = _.takeRight(gameState.used, 3).map(i => i.value);
   console.log(lastThree);
   const valuesLeft = gameState.left.length;
@@ -175,7 +179,9 @@ export default function GameRunner() {
       ) : (
         <div className="ui">
           <h2> Last Called </h2>
-          <h1 className="lastCalled">{lastCalledText}</h1>
+          <h1 className="lastCalled">{lastCalledText1}</h1>
+          <h1 className="lastCalled">{lastCalledText2}</h1>
+          <h1 className="lastCalled">{lastCalledText3}</h1>
           {button()}
         </div>
       )}
