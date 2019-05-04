@@ -173,7 +173,7 @@ export default function GameRunner() {
       </div>
       {winner ? (
         <div className="ui">
-          <h2> BINGO! {text} wins! </h2>
+          <h2> {text === "isitkj" ? "KJ is a liar who does NOT have bingo" : "BINGO! ${text} wins!"} </h2>
           {button()}
         </div>
       ) : (
